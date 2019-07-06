@@ -1,7 +1,19 @@
-import React, { Component } from 'react';
-import {Link} from 'react-router-dom'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { Link } from "react-router-dom";
+import { connect } from 'react-redux'
 
 export class Home extends Component {
+    static propTypes = {
+        auth: PropTypes.object.isRequired
+    }
+
+    componentDidMount() {
+        if(this.props.auth.isAuthenicated){
+            this.props.history.push('/posts');
+        }
+    }
+    
     render() {
         return (
             <div className="dark-overlay text-center ">
@@ -15,4 +27,12 @@ export class Home extends Component {
     }
 }
 
-export default Home
+const mapStateToProps = (state) => ({
+    auth:state.auth
+})
+
+const mapDispatchToProps = {
+    
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)

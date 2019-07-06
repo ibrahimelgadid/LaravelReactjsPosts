@@ -27,8 +27,8 @@ class AuthController extends Controller
         $validate = Validator::make($request -> all(),[
             'email' => 'required|email|unique:users,email',
             'name'=>'required',
-            'password'=>'required|min:1',
-            'password2'=>'same:password'
+            'password'=>'required|min:6|confirmed|regex:/^.*(?=.{3,})(?=.*[a-z])(?=.*[0-9])(?=.*[\d\X]).*$/',
+
         ]);
         if ($validate ->fails()) {
             return response()->json(['errors'=>$validate->errors()],400);

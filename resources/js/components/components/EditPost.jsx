@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter, Redirect } from "react-router-dom";
 import classnames from 'classnames';
 import { getPost, editPost } from "../actions/postActions";
 import { connect } from "react-redux";
@@ -50,6 +50,9 @@ export class EditPost extends Component {
 
     componentDidMount() {
         const {id} = this.props.match.params;
+        if(!this.props.auth.user.id == id){
+            <Redirect to="/posts"/>
+        }
         this.props.getPost(id)
     }
 
@@ -142,13 +145,15 @@ export class EditPost extends Component {
 EditPost.propTypes = {
     errors:PropTypes.object,
     post:PropTypes.object.isRequired,
+    auth:PropTypes.object.isRequired,
     getPost:PropTypes.func.isRequired,
     editPost:PropTypes.func.isRequired
 }
 
 const mapStateToProps = state =>({
     post:state.post,
-    errors:state.errors
+    errors:state.errors,
+    auth:state.auth
 })
 
 export default connect(mapStateToProps, {getPost,editPost})(withRouter(EditPost))

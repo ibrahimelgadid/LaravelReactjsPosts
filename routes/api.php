@@ -27,6 +27,7 @@ Route::group([
     Route::post('me', 'AuthController@me');
 });
 
+Route::resource('avatar', 'ProfileController');
 Route::resource('posts', 'PostsController');
 Route::resource('comments', 'CommentsController');
 

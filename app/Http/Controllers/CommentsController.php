@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Comment;
 use DB;
 use Validator;
+use App\Posts;
 
 class CommentsController extends Controller
 {
@@ -25,15 +26,13 @@ class CommentsController extends Controller
             'body'=>'required'
         ]);
         if ($validate ->fails()) {
-            return response()->json($validate->errors());
+            return response()->json(['errors'=>$validate->errors()],400);
         }
         $comment = new Comment;
         $comment->body = $request->input('body');
         $comment->user_id = auth()->user()->id;
         $comment->posts_id = $request->input('posts_id');
-        if($comment->save()){
-            return response()->json($comment);
-        };
+        $comment->save();
         
     }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, withRouter } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { logoutUser } from "../actions/authAction";
 import { connect } from "react-redux";
 import PropTypes from 'prop-types'
@@ -30,11 +30,9 @@ class NavbarItem extends React.Component {
   }
 
 
-
   render() {
-    
     const {isAuthenicated, user} = this.props.auth;
-    
+    console.log(user)
     return (
       <div>
         <Navbar color="dark" dark expand="sm">
@@ -45,44 +43,44 @@ class NavbarItem extends React.Component {
             {isAuthenicated?(
               <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <Link to="/profile" className='nav-link'>
+                <NavLink to="/profile" className='nav-link'>
                   <img style={{width:25, height:25, borderRadius:15}}
                     src={user.userAvatar == null ?'images/noimage.png':user.userAvatar} alt=""/>
                   {' '}{user.name}
-                  </Link>
+                  </NavLink>
                 </NavItem>
 
                 <NavItem>
-                  <Link to="/posts" className='nav-link'>
+                <NavLink to="/posts" className='nav-link'>
                     Posts
-                  </Link>
+                  </NavLink>
                 </NavItem>
 
                 <NavItem>
-                  <Link to="/addpost" className='nav-link'>
+                <NavLink to="/addpost" className='nav-link'>
                     Add Post
-                  </Link>
+                  </NavLink>
                 </NavItem>
 
                 <NavItem>
-                  <Link to="/login" onClick={this.props.logoutUser.bind(this,this.props.history)} className='nav-link'>
+                <NavLink to="/login" onClick={this.props.logoutUser.bind(this,this.props.history)} className='nav-link'>
                     Logout
-                  </Link>
+                  </NavLink>
                 </NavItem>
 
               </Nav>
             ):(
               <Nav className="mr-auto" navbar>
                 <NavItem>
-                  <Link to="/register" className='nav-link'>
+                <NavLink to="/register" className='nav-link'>
                     Register
-                  </Link>
+                  </NavLink>
                 </NavItem>
 
                 <NavItem>
-                  <Link to="/login" className='nav-link'>
+                <NavLink to="/login" className='nav-link'>
                     Login
-                  </Link>
+                  </NavLink>
                 </NavItem>
               </Nav>
             )}
@@ -103,4 +101,4 @@ const mapStateToProps = state =>({
   auth:state.auth,
 })
 
-export default connect(mapStateToProps, {logoutUser})(withRouter(NavbarItem))
+export default connect(mapStateToProps, {logoutUser})(NavbarItem)

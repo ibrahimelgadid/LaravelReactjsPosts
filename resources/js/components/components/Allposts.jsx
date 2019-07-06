@@ -47,13 +47,13 @@ export class Allposts extends Component {
         }
         
         return (
-            <div className='text-center'>
+            <div>
                 {notOwner?
                     (<div className='text-danger'>
                         {notOwner}
                     </div>):null}
-                <h2>Posts Show</h2>
-                <div className="row">
+                <h2 className='text-center'>Posts Show</h2>
+                <div className="row justify-content-center">
                     {postShow}
                 </div>
             </div>

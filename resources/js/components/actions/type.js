@@ -42,6 +42,13 @@ export const ADD_LIKE = 'ADD_LIKE';
 export const ADD_DISLIKE = 'ADD_DISLIKE';
 
 
+/* ========================================= */
+/* =/=/=/=>  comment action type    <=/=/=/= */
+/* ========================================= */
+export const ADD_COMMENT = 'ADD_COMMENT';
+export const DELETE_COMMENT = 'DELETE_COMMENT';
+
+
 
 /* ========================================= */
 /* =/=/=/=>   image action type     <=/=/=/= */

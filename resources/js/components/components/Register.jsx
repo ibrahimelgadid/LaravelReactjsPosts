@@ -11,7 +11,7 @@ export class Register extends Component {
         name : '',
         email:'',
         password:'',
-        password2:'',
+        password_confirmation:'',
         errors:{},
     }
 
@@ -23,13 +23,13 @@ export class Register extends Component {
 
     userRegister = (e) =>{
         e.preventDefault();
-        const {name, email, password, password2} = this.state;
+        const {name, email, password, password_confirmation} = this.state;
 
         const newUser={
             name:name,
             email:email,
             password:password,
-            password2:password2
+            password_confirmation:password_confirmation
         }
 
         this.props.registerUser(newUser, this.props.history);
@@ -43,11 +43,15 @@ export class Register extends Component {
         }
     }
     
-
+    componentDidMount() {
+        if(this.props.auth.isAuthenicated){
+            this.props.history.push('/posts');
+        }
+    }
 
     render() {
         
-        const { name, email, password, password2,errors} = this.state;
+        const { name, email, password, password_confirmation,errors} = this.state;
         
         return (
             <div>
@@ -68,7 +72,7 @@ export class Register extends Component {
                                                     value={name}
                                                     onChange={this.Change}
                                                 />
-                                                {errors.name?(<div className="invalid-feedback">{errors.name}</div>):null}
+                                                {errors.name?(<div className="invalid-feedback">{errors.name[0]}</div>):null}
                                             </div>
 
                                             <div className="form-group">
@@ -80,7 +84,7 @@ export class Register extends Component {
                                                     value={email}
                                                     onChange={this.Change}
                                                 />
-                                                {errors.email?(<div className="invalid-feedback">{errors.email}</div>):null}
+                                                {errors.email?(<div className="invalid-feedback">{errors.email[0]}</div>):null}
                                             </div>
 
                                             <div className="form-group">
@@ -92,22 +96,21 @@ export class Register extends Component {
                                                     value={password}
                                                     onChange={this.Change}
                                                 />
-                                                {errors.password?(<div className="invalid-feedback">{errors.password}</div>):null}
+                                                {errors.password?(<div className="invalid-feedback">{errors.password[0]}</div>):null}
                                             </div>
 
                                             <div className="form-group">
                                                 <input 
                                                     type="password" 
-                                                    name='password2'
-                                                    className={classnames('form-control', {'is-invalid':errors.password2})}
+                                                    name='password_confirmation'
+                                                    className='form-control'
                                                     placeholder='Confirm your password'
-                                                    value={password2}
+                                                    value={password_confirmation}
                                                     onChange={this.Change}
                                                 />
-                                                {errors.password2?(<div className="invalid-feedback">{errors.password2}</div>):null}
                                             </div>
 
-                                            <input type="submit" value='Register' className="btn btn-info btn-block mt-4" />
+                                            <input type="submit" value='Register' className="btn btn-info btn-block mt-4 text-white" />
                                         </form>
                                     </div>
                                 </div>

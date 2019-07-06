@@ -38,6 +38,12 @@ export class Login extends Component {
             })
         }
     }
+
+    componentDidMount() {
+        if(this.props.auth.isAuthenicated){
+            this.props.history.push('/posts');
+        }
+    }
     
 
 

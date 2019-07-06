@@ -23,15 +23,15 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $posts = Posts::with(['user','comments'])->orderBy('created_at', 'DESC')->get();
+        $posts = Posts::with(['user','comments', 'comments.user'])->orderBy('created_at', 'DESC')->get();
         return response()->json($posts);
     }
 
-    public function userPosts(){
-        $user_id = auth()->user()->id;
-        $user = User::find($user_id);
-        return response()->json($user->posts);
-    }
+    // public function userPosts(){
+    //     $user_id = auth()->user()->id;
+    //     $user = User::find($user_id);
+    //     return response()->json($user->posts);
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -147,14 +147,4 @@ class PostsController extends Controller
         }
     }
 
-    public function hasAuthorityToDo(){
-        $post = Posts::find($id);
-        if(auth()->user()->id == $post->user_id){
-            return true;
-            exit();
-        }else {
-            return false;
-            exit();
-        }
-    }
 }

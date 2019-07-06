@@ -17,6 +17,21 @@ export const getPosts = () => dispatch=>{
     }))
 }
 
+export const getPostsWithoutLoading = () => dispatch=>{
+    // dispatch(setPostLoading());
+    axios.get('/api/posts').then(
+        res=>{dispatch({
+            type:type.GET_POSTS,
+            payload:res.data
+        })
+        
+    }
+    ).catch(err=>dispatch({
+        type:type.GET_ERRORS,
+        payload:err.response.data
+    }))
+}
+
 
 export const addPost = (postData, history) =>dispatch=>{
     dispatch(clearErrors());
@@ -110,35 +125,31 @@ export const getPost = (id)=>dispatch=>{
 }
 
 
-// export const addComment = (id,commentData) =>dispatch=>{
-//     dispatch(clearErrors());
-//     axios.post('/api/posts/comment/'+id,commentData).then(
-//         res=>dispatch({
-//             type:type.GET_POST,
-//             payload:res.data
-//         })
-//     ).catch(err=>{
-//         dispatch({
-//             type:type.GET_ERRORS,
-//             payload:err.response.data
-//         })
-//     })
-// }
+export const addComment = (commentData) =>dispatch=>{
+    dispatch(clearErrors());
+    axios.post('/api/comments',commentData).then(
+        res=>{
+        dispatch(getPostsWithoutLoading())
+    }
+    ).catch(err=>{
+        dispatch({
+            type:type.GET_ERRORS,
+            payload:err.response.data
+        })
+    })
+}
 
 
-// export const deleteComment = (postId,commentId) =>dispatch=>{
-//     axios.delete('/api/posts/comment/'+postId+'/'+commentId).then(
-//         res=>dispatch({
-//             type:type.GET_POST,
-//             payload:res.data
-//         })
-//     ).catch(err=>{
-//         dispatch({
-//             type:type.GET_ERRORS,
-//             payload:err.response.data
-//         })
-//     })
-// }
+export const deleteComment = (commentId) =>dispatch=>{
+    axios.delete('/api/comments/'+commentId).then(
+        res=>dispatch(getPostsWithoutLoading())
+    ).catch(err=>{
+        dispatch({
+            type:type.GET_ERRORS,
+            payload:err.response.data
+        })
+    })
+}
 
 
 export const clearErrors = () => dispatch=>{

@@ -3,7 +3,7 @@ import * as type from '../actions/type';
 const initialState={
     posts:[],
     post:{},
-    loading:true
+    loading:false
 };
 
 export default function(state=initialState, action){
@@ -20,7 +20,7 @@ export default function(state=initialState, action){
             return{
                 ...state,
                 posts:action.payload,
-                loading:true
+                loading:false
             }
 
 
@@ -49,6 +49,7 @@ export default function(state=initialState, action){
     //         ...state,
     //         posts:[action.payload]
     //     }
+
 
 
         default:
